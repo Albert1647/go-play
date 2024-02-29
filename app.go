@@ -3,58 +3,49 @@ package main
 import "fmt"
 
 type product struct {
-	Id    string
-	Title string
-	Price string
+	title string
+	price string
+}
+
+type detail struct {
+	image   string
+	content string
+}
+
+type productWithDetail struct {
+	test string
+	product 
+	detail  
+}
+
+func NewProduct(title, price string) product {
+	return product{
+		title: title,
+		price: price,
+	}
+}
+
+func NewDetail(image, content string) detail {
+	return detail{
+		image:   image,
+		content: content,
+	}
+}
+
+func ProductWithDetail(p product, d detail) productWithDetail {
+	return productWithDetail{
+		p ,d
+	}
+}
+
+func (p productWithDetail) display() {
+	fmt.Print(p.product)
+	// fmt.Printf("Name: %v\nPrice: %v\nImage: %v\nContent: %v", p.title, p.price, p.image, p.content)
 }
 
 func main() {
-	// 1
-	var hobbies [3]string = [3]string{"first", "second", "last"}
-	output(hobbies)
-
-	// 2
-	output("2 -----")
-	output(hobbies[0])
-	output(hobbies[1:3])
-
-	// 3
-	output("3 -----")
-	mainHob := hobbies[:2]
-	output(mainHob)
-	// 4
-	output("4 -----")
-	output(mainHob[0:1])
-	output(len(mainHob[0:1]), cap(mainHob[0:1]))
-
-	// 5
-	output("5 -----")
-	courseGoal := []string{"Learn Go", "Apply Go"}
-	output(courseGoal)
-	// 6
-	output("6 -----")
-	courseGoal[1] = "Write RestAPI"
-	output(courseGoal)
-	courseGoal = append(courseGoal, "Apply Go")
-	output(courseGoal)
-
-	// Bonus
-	output("Bonus -----")
-	products := []product{
-		{
-			Id: "1", Title: "qk65", Price: "49.99",
-		},
-		{
-			Id: "2", Title: "qk75", Price: "59.99",
-		},
-	}
-	output(products)
-	products = append(products, product{
-		Id: "3", Title: "qk100", Price: "69.99",
-	})
-	output(products)
-}
-
-func output(array ...interface{}) {
-	fmt.Println(array...)
+	var product = NewProduct("Car", "12")
+	var detail = NewDetail("Image", "Fast")
+	var newProductWithDetail = ProductWithDetail(product, detail)
+	newProductWithDetail.display()
 }
