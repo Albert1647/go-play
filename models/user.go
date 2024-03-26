@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"natthan.com/go-play/db"
 	"natthan.com/go-play/utils"
 )
@@ -11,7 +13,7 @@ type User struct {
 	Password string `binding:"required"`
 }
 
-func (u User) Save() error {
+func (u *User) Save() error {
 	query := `
 	INSERT INTO users(email, password) 
 	VALUES (?, ?)
@@ -73,4 +75,24 @@ func GetUserByID(id int64) (*User, error) {
 		return nil, err
 	}
 	return &user, nil
+}
+
+func (u *User) ValidateCredentials() error {
+	query := "SELECT id, password FROM users WHERE email = ?"
+	row := db.DB.QueryRow(query, u.Email)
+
+	var retrievedPassword string
+	err := row.Scan(&u.ID, &retrievedPassword)
+
+	if err != nil {
+		return err
+	}
+
+	passwordIsValid := utils.CheckPasswordHash(u.Password, retrievedPassword)
+
+	if !passwordIsValid {
+		return errors.New("credentials invalid")
+	}
+
+	return nil
 }
