@@ -1,10 +1,18 @@
 app:
   port: 8080
 
-db:
+mysql:
   driver: "mysql"
   host: "13.76.163.73"
   port: 3306
   username: root
   password: P@ssw0rd
+  database: banking
+
+postgres:
+  driver: "postgres"
+  host: "localhost"
+  port: 5432
+  username: postgres
+  password: pg4069
   database: banking
