@@ -1,0 +1,37 @@
+openapi: "3.0.3"
+info:
+  title: Basic API 1.0
+  version: "3.0"
+servers:
+  - url: http://localhost:8080
+    description: Local server - Auth
+paths:
+  /test:
+    get: 
+      summary: Send OTP
+      description: Send OTP
+      responses:
+        "200":
+          $ref: "#/components/responses/200Ok"
+components:
+  schemas:
+    Message:
+        type: object
+        properties:
+          message:
+            type: string
+            example: success
+        required:
+          - message
+  responses:
+    200Ok:
+      description: response with success.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Message"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

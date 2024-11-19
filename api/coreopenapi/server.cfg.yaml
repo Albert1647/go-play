@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/deepmap/oapi-codegen/HEAD/configuration-schema.json
+package: coreopenapi
+generate:
+  chi-server: true
+  embedded-spec: true
+output: server.gen.go

@@ -1,0 +1,38 @@
+notification:
+  url: http://localhost:5005
+  token:
+auth:
+  port: 8080
+core:
+  port: 8081
+  cache_addr: localhost:6383
+admin:
+  port:
+  cache_addr: 
+  jwt_admin_secret:
+
+usercfg:
+  db_dsn: db:db@localhost:5441/user?sslmode=disable
+  cache_addr_port: :6381
+
+database:
+  cloud_sql_host: project-name:region-southeast1:project-uniq-name
+  user_dsn: ## DB
+
+google:
+  project_id: project-name
+  client_id: hash.apps.googleusercontent.com
+  private_bucket: private_dev_storage_google-app
+  public_bucket: public_dev_storage_google-app
+
+jwt:
+  private_key:
+  public_key:
+  access_token_expiration: 86400 # in seconds; 1 day
+  refresh_token_expiration: 172800 # in seconds; 2 days
+  # issuer: https://domain.name.app
+  # audiences:
+  #   - https://auth.domain.app
+  #   - https://api.domain.app
+
+

@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+services:
+  # user-db:
+  #   image: postgres:15-alpine
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_USER=albert
+  #     - POSTGRES_PASSWORD=albert
+  #     - POSTGRES_DB=user
+  #   ports:
+  #     - 5441:5432
+  #   volumes:
+  #     - user-db-data:/var/lib/postgresql/data
+## TODO: edit file path
+## TODO: why 2 port ??
+  user-cache:
+    image: redis/redis-stack:latest
+    restart: always
+    ports:
+      - 6381:6379
+      - 6382:8001
+    volumes:
+      - user-cache-data:/data
+  core-cache:
+    image: redis/redis-stack:latest
+    restart: always
+    ports:
+      - 6383:6379
+      - 6384:8001
+    volumes:
+      - core-cache-data:/data
+## TODO: edit file path
+  auth-swagger:
+    image: swaggerapi/swagger-editor:latest
+    restart: always
+    ports:
+      - 8180:8080
+    volumes:
+      - ./cmd/auth/api/openapi:/tmp
+    environment:
+      - SWAGGER_FILE=/tmp/openapi.user.v2.yaml
+## TODO: edit file path
+  core-swagger:
+    image: swaggerapi/swagger-editor:latest
+    restart: always
+    ports:
+      - 8181:8080
+    volumes:
+      - ./api/http/coreopenapi:/tmp
+    environment:
+      - SWAGGER_FILE=/tmp/openapi.core.v2.yaml
+
+volumes:
+  user-db-data: {}
+  user-cache-data: {}
+  core-cache-data: {}
